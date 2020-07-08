@@ -21,7 +21,6 @@ class ProductCell: UITableViewCell {
         self.selectionStyle = .none
         self.accessoryType = .disclosureIndicator
         self.backgroundColor = Constants.mainColor
-        self.tintColor = .red
     }
     
     @objc private func longPress() {
