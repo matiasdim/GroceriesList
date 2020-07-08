@@ -19,10 +19,11 @@ protocol ProductFormSavedDelegate: AnyObject {
 
 class ProductFormViewController: UIViewController {
 
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var categoryContainer: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var observationTextField: UITextField!
-    @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var titleContainer: UIView!
     
@@ -44,6 +45,8 @@ class ProductFormViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.stackView.setCustomSpacing(30, after: self.categoryContainer)
         
         self.titleLabel.text = "New Product"
         self.titleContainer.isHidden = (self.formType == .edit)

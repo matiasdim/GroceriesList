@@ -18,10 +18,11 @@ class RootViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyView: UIView!
-    
+//
     var items: [Product] = (0..<5).map {
         Product(name: "Item \($0 + 1)", observation: "Observation \($0 + 1)", category: .dairy)
     }
+//    var items: [Product] = []
     let reuseIdentifier = "ProductCell"
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -41,7 +42,7 @@ class RootViewController: UIViewController {
         
         self.tableView.separatorColor = Constants.secondaryColor
         self.tableView.register(UINib(nibName: self.reuseIdentifier, bundle: nil), forCellReuseIdentifier: self.reuseIdentifier)
-        self.tableView.backgroundColor = Constants.mainColor
+        self.tableView.backgroundColor = Constants.secondaryColor
         
     }
     
@@ -97,6 +98,7 @@ extension RootViewController: UITableViewDataSource {
             self.items.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             self.emptyView.isHidden = !self.items.isEmpty
+            tableView.reloadData()
         }
     }
 }

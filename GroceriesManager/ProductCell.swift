@@ -20,14 +20,12 @@ class ProductCell: UITableViewCell {
         self.observationTitleLabel.text = "Observation"
         self.selectionStyle = .none
         self.accessoryType = .disclosureIndicator
-        self.contentView.superview?.backgroundColor = Constants.mainColor // AccessoryVIew bg color
+        self.backgroundColor = Constants.mainColor
         self.tintColor = .red
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
+    @objc private func longPress() {
+        self.backgroundColor = Constants.thirdColor
+    }
+
 }

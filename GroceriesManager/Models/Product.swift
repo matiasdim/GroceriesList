@@ -13,7 +13,6 @@ enum Category: String, CaseIterable {
     case vegetables = "Vegetables"
     case dairy = "Dairy"
     case snacks = "Snacks"
-    //case beverages = "Beverages"
 }
 
 class Product: NSObject {
