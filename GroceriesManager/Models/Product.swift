@@ -9,11 +9,11 @@
 import UIKit
 
 enum Category: String, CaseIterable {
-    case none = "None"
-    case vegetables = "Vegetables"
-    case dairy = "Dairy products"
-    case snacks = "Snacks"
     case other = "Other"
+    case vegetables = "Vegetables"
+    case dairy = "Dairy"
+    case snacks = "Snacks"
+    //case beverages = "Beverages"
 }
 
 class Product: NSObject {

@@ -22,12 +22,14 @@ class ProductFormViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var observationTextField: UITextField!
-    @IBOutlet weak var categoryPicker: UIPickerView!
     @IBOutlet weak var shadowView: UIView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var titleContainer: UIView!
     
     weak var delegate: ProductFormSavedDelegate?
     var product: Product?
     var formType: FormType
+    private var selectedSegmentIndex = 0
     
     init(product: Product? = nil, delegate: ProductFormSavedDelegate, type: FormType){
         self.product = product
@@ -43,40 +45,54 @@ class ProductFormViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.titleLabel.text = (self.formType == .create) ? "New Product" : "Edit Product"
-        
-        self.categoryPicker.delegate = self
-        self.categoryPicker.dataSource = self
-        var pickerInitialIndex = 0
-        if let product = self.product, let index = Category.allCases.firstIndex(of: product.category) {
-            pickerInitialIndex = index
-        }
-        self.categoryPicker.selectRow(pickerInitialIndex , inComponent: 0, animated: false)
-        self.categoryPicker.setValue(Constants.secondaryColor, forKeyPath: "textColor")
+        self.titleLabel.text = "New Product"
+        self.titleContainer.isHidden = (self.formType == .edit)
         
         self.nameTextField.delegate = self
-        self.nameTextField.becomeFirstResponder()
         self.nameTextField.text = self.product?.name
         self.observationTextField.delegate = self
         self.observationTextField.text = self.product?.observation
+        
+        
+        //SegmntedControl setup
+        self.segmentedControl.removeAllSegments()
+        self.segmentedControl.backgroundColor = Constants.secondaryColor
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Constants.mainColor], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Constants.secondaryColor], for: .selected)
+        for (index, category) in Category.allCases.enumerated() {
+            self.segmentedControl.insertSegment(withTitle: category.rawValue, at: index, animated: false)
+        }
+        
+        if let product = self.product, let index = Category.allCases.firstIndex(of: product.category) {
+            self.segmentedControl.selectedSegmentIndex = index
+        } else {
+            self.segmentedControl.selectedSegmentIndex = self.selectedSegmentIndex
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
+    
+    @IBAction func indexChanged(_ sender: UISegmentedControl) {
+        self.selectedSegmentIndex = sender.selectedSegmentIndex
+    }
+    
     @IBAction func saveButtonPressed(_ sender: Any) {
         if let name = self.nameTextField.text, !name.isEmpty, let observation = self.observationTextField.text, !observation.isEmpty {
             if let product = self.product {
                 product.name = name
                 product.observation = observation
+                product.category = Category.allCases[self.selectedSegmentIndex]
                 // Improve thisduble call didsave
                 self.delegate?.didSaveForm(product: product, formType: self.formType)
             } else {
-                self.delegate?.didSaveForm(product: Product(name: name, observation: observation, category: .none), formType: self.formType)
+                self.delegate?.didSaveForm(product: Product(name: name,
+                                                            observation: observation,
+                                                            category: Category.allCases[self.selectedSegmentIndex]),
+                                           formType: self.formType)
             }
-            // When adding is presented modally. Editing is pushed from navigationcontroller
-//            (self.formType == .create) ? self.dismiss(animated: true) : self.navigationController?.popViewController(animated: true)
+            // When adding, form is presented modally. On edit, it is pushed from navigationcontroller
             if self.formType == .create {
                 self.dismiss(animated: true)
             } else {
@@ -88,29 +104,11 @@ class ProductFormViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
+
     override func resignFirstResponder() -> Bool {
         return true
     }
 
-}
-
-extension ProductFormViewController: UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Category.allCases.count
-    }
-    
-    
-}
-
-extension ProductFormViewController: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Category.allCases[row].rawValue
-    }
 }
 
 extension ProductFormViewController: UITextFieldDelegate {
