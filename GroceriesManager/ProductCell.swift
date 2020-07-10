@@ -11,13 +11,13 @@ import UIKit
 class ProductCell: UITableViewCell {
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var productNameLabel: UILabel!
-    @IBOutlet weak var observationTitleLabel: UILabel!
-    @IBOutlet weak var observationLabel: UILabel!
+    @IBOutlet weak var notesTitleLabel: UILabel!
+    @IBOutlet weak var notesLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.observationTitleLabel.text = "Observation"
+        self.notesTitleLabel.text = "Notes"
         self.selectionStyle = .none
         self.accessoryType = .disclosureIndicator
         self.backgroundColor = Constants.mainColor

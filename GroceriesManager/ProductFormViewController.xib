@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,7 +11,7 @@
             <connections>
                 <outlet property="categoryContainer" destination="Qcg-rL-xlL" id="6wj-1b-LjA"/>
                 <outlet property="nameTextField" destination="uer-Ts-06F" id="UK0-c1-rPP"/>
-                <outlet property="observationTextField" destination="bbr-Ch-nG3" id="c2N-I4-E5X"/>
+                <outlet property="notesTextField" destination="bbr-Ch-nG3" id="XV0-r7-WSq"/>
                 <outlet property="segmentedControl" destination="zm6-Ad-48t" id="f6v-HZ-5JR"/>
                 <outlet property="stackView" destination="W7x-Wf-CcQ" id="MbR-wo-cK9"/>
                 <outlet property="titleContainer" destination="pZH-6b-txo" id="yA1-gZ-DBS"/>
@@ -81,17 +81,17 @@
                                 <constraint firstAttribute="height" constant="1" id="Jii-RF-rlL"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bic-gG-0dM" userLabel="ObservationContainer">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bic-gG-0dM" userLabel="NotesContainer">
                             <rect key="frame" x="20" y="95" width="374" height="50"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Observation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONS-Cu-ipn">
-                                    <rect key="frame" x="0.0" y="0.0" width="100.5" height="50"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONS-Cu-ipn">
+                                    <rect key="frame" x="0.0" y="0.0" width="48.5" height="50"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                     <color key="textColor" red="0.12941176469999999" green="0.1529411765" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Observation of the product" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bbr-Ch-nG3">
-                                    <rect key="frame" x="110.5" y="0.0" width="263.5" height="50"/>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Notes for the product" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bbr-Ch-nG3">
+                                    <rect key="frame" x="58.5" y="0.0" width="315.5" height="50"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>

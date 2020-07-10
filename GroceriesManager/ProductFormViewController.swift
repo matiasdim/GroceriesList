@@ -23,7 +23,7 @@ class ProductFormViewController: UIViewController {
     @IBOutlet weak var categoryContainer: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var observationTextField: UITextField!
+    @IBOutlet weak var notesTextField: UITextField!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var titleContainer: UIView!
     
@@ -53,8 +53,8 @@ class ProductFormViewController: UIViewController {
         
         self.nameTextField.delegate = self
         self.nameTextField.text = self.product?.name
-        self.observationTextField.delegate = self
-        self.observationTextField.text = self.product?.observation
+        self.notesTextField.delegate = self
+        self.notesTextField.text = self.product?.notes
         
         
         //SegmntedControl setup
@@ -82,16 +82,16 @@ class ProductFormViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        if let name = self.nameTextField.text, !name.isEmpty, let observation = self.observationTextField.text, !observation.isEmpty {
+        if let name = self.nameTextField.text, !name.isEmpty, let notes = self.notesTextField.text, !notes.isEmpty {
             if let product = self.product {
                 product.name = name
-                product.observation = observation
+                product.notes = notes
                 product.category = Category.allCases[self.selectedSegmentIndex]
                 // Improve thisduble call didsave
                 self.delegate?.didSaveForm(product: product, formType: self.formType)
             } else {
                 self.delegate?.didSaveForm(product: Product(name: name,
-                                                            observation: observation,
+                                                            notes: notes,
                                                             category: Category.allCases[self.selectedSegmentIndex]),
                                            formType: self.formType)
             }

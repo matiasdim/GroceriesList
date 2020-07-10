@@ -112,7 +112,7 @@ extension RootViewController: UITableViewDataSource {
             let product = self.items[indexPath.row]
             cell.categoryLabel.text = product.category.rawValue
             cell.productNameLabel.text = product.name
-            cell.observationLabel.text = product.observation
+            cell.notesLabel.text = product.notes
 
             return cell
         }

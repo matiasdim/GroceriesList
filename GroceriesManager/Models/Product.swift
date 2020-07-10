@@ -18,13 +18,13 @@ enum Category: String, CaseIterable, Codable {
 class Product: NSObject, Codable {
     var id: String
     var name: String
-    var observation: String
+    var notes: String
     var category: Category
     
-    init(name: String, observation: String, category: Category) {
+    init(name: String, notes: String, category: Category) {
         self.id = UUID().uuidString
         self.name = name
-        self.observation = observation
+        self.notes = notes
         self.category = category
     }
 }
