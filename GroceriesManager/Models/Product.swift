@@ -8,14 +8,14 @@
 
 import UIKit
 
-enum Category: String, CaseIterable {
+enum Category: String, CaseIterable, Codable {
     case other = "Other"
     case vegetables = "Vegetables"
     case dairy = "Dairy"
     case snacks = "Snacks"
 }
 
-class Product: NSObject {
+class Product: NSObject, Codable {
     var id: String
     var name: String
     var observation: String

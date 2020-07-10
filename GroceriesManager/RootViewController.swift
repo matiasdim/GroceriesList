@@ -14,15 +14,49 @@ extension UINavigationController {
     }
 }
 
+//Move this class to another class
+class UserDefaultsManager {
+    //add object to array
+    
+    static let productsKey = "Products"
+    
+    static func encodeObject<T: Codable>(object: T) -> Data? {
+        do {
+            return try JSONEncoder().encode(object)
+        } catch {
+            print("Could not encode")
+            return nil
+        }
+    }
+    
+    static func decodeObject<T: Decodable>(data: Data, objectType: T.Type) -> T? {
+        do {
+            return try JSONDecoder().decode(objectType, from: data)
+        } catch {
+            print("Could not decode")
+            return nil
+        }
+    }
+    
+    static func products() -> [Product] {
+        if let data = UserDefaults.standard.object(forKey: Self.productsKey) as? Data, let products = Self.decodeObject(data: data, objectType: [Product].self) {
+            return products
+        }
+        return []
+    }
+    
+    static func updateProducts(products: [Product]) {
+        UserDefaults.standard.set(Self.encodeObject(object: products), forKey: Self.productsKey)
+    }
+    
+}
+
 class RootViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyView: UIView!
 //
-    var items: [Product] = (0..<5).map {
-        Product(name: "Item \($0 + 1)", observation: "Observation \($0 + 1)", category: .dairy)
-    }
-//    var items: [Product] = []
+    var items: [Product] = []
     let reuseIdentifier = "ProductCell"
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -31,7 +65,9 @@ class RootViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.items = UserDefaultsManager.products()
+        
         self.navigationItem.title = "Products"
         let textAttributes = [NSAttributedString.Key.foregroundColor: Constants.mainColor]
         self.navigationController?.navigationBar.titleTextAttributes = textAttributes
@@ -43,6 +79,7 @@ class RootViewController: UIViewController {
         self.tableView.separatorColor = Constants.secondaryColor
         self.tableView.register(UINib(nibName: self.reuseIdentifier, bundle: nil), forCellReuseIdentifier: self.reuseIdentifier)
         self.tableView.backgroundColor = Constants.secondaryColor
+        self.tableView.reloadData()
         
     }
     
@@ -96,7 +133,8 @@ extension RootViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.items.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            UserDefaultsManager.updateProducts(products: self.items)
+            tableView.deleteRows(at: [indexPath], with: .fade)            
             self.emptyView.isHidden = !self.items.isEmpty
             tableView.reloadData()
         }
@@ -110,6 +148,7 @@ extension RootViewController: ProductFormSavedDelegate {
         } else if let row = self.items.firstIndex(of: product) {//self.items.firstIndex(where: { $0.id == product.id }) {
                 self.items[row] = product
         }
+        UserDefaultsManager.updateProducts(products: self.items)
         self.emptyView.isHidden = !self.items.isEmpty
         self.tableView.reloadData()
     }
